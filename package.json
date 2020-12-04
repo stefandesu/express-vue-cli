@@ -4,11 +4,14 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "build": "vue-cli-service build --report-json",
+    "lint": "vue-cli-service lint",
+    "start": "node server.js"
   },
   "dependencies": {
     "core-js": "^3.6.5",
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
     "vue": "^3.0.0"
   },
   "devDependencies": {
@@ -43,5 +46,12 @@
     "> 1%",
     "last 2 versions",
     "not dead"
-  ]
+  ],
+  "vue": {
+    "pages": {
+      "app1": "vue/app1.js",
+      "app2": "vue/app2.js",
+      "component": "vue/component.js"
+    }
+  }
 }
