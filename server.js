@@ -4,12 +4,18 @@ const app = express()
 const cp = require('child_process')
 const fs = require('fs')
 const reportFile = './dist/report.json'
+const isDev = process.env.NODE_ENV === 'development'
+// TODO: Should be retrieved from config
+const vuePort = 8122
+if (isDev) {
+  console.log('Running in development mode')
+}
 
 // build our vue project on first run if report.json can't be found
 // TODO: We could create a Promise and make the first request(s) wait for that Promise to be fulfilled.
-if (!fs.existsSync(reportFile)) {
+if (isDev && !fs.existsSync(reportFile)) {
   console.log('Building Vue project in background.')
-  cp.exec('npm run build', { env: process.env })
+  cp.exec('npm run vue:build', { env: process.env })
 }
 
 // set the view engine to ejs
@@ -23,7 +29,9 @@ for (const type of ['js', 'img', 'css']) {
 
 app.use((req, res, next) => {
   req.context = {
-    name: req.path.slice(req.path.lastIndexOf('/') + 1)
+    name: req.path.slice(req.path.lastIndexOf('/') + 1),
+    isDev,
+    assetPrefix: isDev ? `http://localhost:${vuePort}/` : ''
   }
   next()
 })

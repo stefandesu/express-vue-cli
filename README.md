@@ -6,20 +6,23 @@ An example project that combines an Express server that serves EJS templates wit
 npm install
 ```
 
-### Runs server
+### Runs production server
 Will run build on first launch.
 ```
 npm run start
 ```
 
-### Compiles and hot-reloads for development (only Vue stuff)
+### Runs development server
+This will start the Vue dev server on port 8122 and the Express server on port 8123. Express will then use the assets from Vue's dev server instead of the static files from `dist`, allowing hot reloading for Vue modules even when accessing via Express.
 ```
-npm run serve
+npm run dev
 ```
+
+http://localhost:8123
 
 ### Compiles and minifies for production (only Vue stuff)
 ```
-npm run build
+npm run vue:build
 ```
 
 ### Lints and fixes files

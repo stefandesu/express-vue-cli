@@ -3,9 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build --report-json",
+    "vue:serve": "vue-cli-service serve --port 8122",
+    "vue:build": "vue-cli-service build --no-clean --report-json",
     "lint": "vue-cli-service lint",
+    "express:serve": "NODE_ENV=development nodemon server.js",
+    "dev": "concurrently \"npm:express:serve\" \"npm:vue:serve\"",
     "start": "node server.js"
   },
   "dependencies": {
@@ -21,12 +23,14 @@
     "@vue/compiler-sfc": "^3.0.0",
     "@vue/eslint-config-standard": "^5.1.2",
     "babel-eslint": "^10.1.0",
+    "concurrently": "^5.3.0",
     "eslint": "^6.7.2",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.0",
-    "eslint-plugin-vue": "^7.0.0-0"
+    "eslint-plugin-vue": "^7.0.0-0",
+    "nodemon": "^2.0.6"
   },
   "eslintConfig": {
     "root": true,
@@ -48,11 +52,20 @@
     "not dead"
   ],
   "vue": {
+    "devServer": {
+      "progress": false
+    },
     "pages": {
       "app1": "vue/app1.js",
       "app2": "vue/app2.js",
       "component": "vue/component.js"
     },
     "filenameHashing": false
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "test/*",
+      "vue/*"
+    ]
   }
 }

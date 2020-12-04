@@ -1,5 +1,8 @@
 <p>This is the footer.</p>
 
 <!-- JavaScript -->
-<script src="/js/chunk-vendors.js"></script>
-<script src="/js/component.js"></script>
+<script src="<%= assetPrefix %>js/chunk-vendors.js"></script>
+<% if (isDev) { %>
+<script src="<%= assetPrefix %>js/chunk-common.js"></script>
+<% } %>
+<script src="<%= assetPrefix %>js/component.js"></script>
