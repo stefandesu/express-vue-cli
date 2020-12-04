@@ -22,32 +22,9 @@ for (const type of ['js', 'img', 'css']) {
 }
 
 app.use((req, res, next) => {
-  // invalidate cache for report.json
-  // TODO: Only do this if timestamp has changed?
-  delete require.cache[require.resolve(reportFile)]
-  const report = require(reportFile)
-  // assemble assets
-  const assets = {}
-  for (const name of Object.keys(report.assetsByChunkName)) {
-    assets[name] = {}
-    for (const type of ['js', 'css']) {
-      assets[name][type] = report.assetsByChunkName[name].filter(a => a.endsWith(`.${type}`))
-    }
+  req.context = {
+    name: req.path.slice(req.path.lastIndexOf('/') + 1)
   }
-  // build context
-  const name = req.path.slice(req.path.lastIndexOf('/') + 1)
-  const context = {
-    name
-  }
-  for (const type of ['js', 'css']) {
-    context[type] = []
-    for (const chunk of ['chunk-vendors', 'component', name]) {
-      if (assets[chunk]) {
-        context[type] = context[type].concat(assets[chunk][type] || [])
-      }
-    }
-  }
-  req.context = context
   next()
 })
 

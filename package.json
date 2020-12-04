@@ -52,6 +52,7 @@
       "app1": "vue/app1.js",
       "app2": "vue/app2.js",
       "component": "vue/component.js"
-    }
+    },
+    "filenameHashing": false
   }
 }
